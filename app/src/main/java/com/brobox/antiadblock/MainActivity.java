@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
+    private static List<AdBlockerApp> list;
     private boolean isInstalled = false;
 
     @Override
@@ -30,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         String[] adBlockerApps = getResources().getStringArray(R.array.adBlockerArray);
-        List<AdBlockerApp> list = new ArrayList<AdBlockerApp>();
+        list = new ArrayList<AdBlockerApp>();
         for (String app : adBlockerApps) list.add(new AdBlockerApp(appInstalledOrNot(app), app));
 
         if (isInstalled) {
@@ -88,6 +90,10 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            ListView listView = (ListView) rootView.findViewById(R.id.listView);
+            MyAdapter adapter = new MyAdapter(getActivity(), list);
+            listView.setAdapter(adapter);
             return rootView;
         }
     }
