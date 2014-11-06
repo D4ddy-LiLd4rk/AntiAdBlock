@@ -1,5 +1,6 @@
 package com.brobox.antiadblock;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +40,7 @@ public class MyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View view = inflater.inflate(R.layout.list_item, parent, false);
         TextView textBoolean = (TextView) view.findViewById(R.id.textBoolean);
         TextView textName = (TextView) view.findViewById(R.id.textName);

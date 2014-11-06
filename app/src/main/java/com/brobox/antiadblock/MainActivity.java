@@ -1,5 +1,7 @@
 package com.brobox.antiadblock;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,8 +37,22 @@ public class MainActivity extends ActionBarActivity {
         list = new ArrayList<AdBlockerApp>();
         for (String app : adBlockerApps) list.add(new AdBlockerApp(appInstalledOrNot(app), app));
 
+        for (AdBlockerApp ads : list) if (ads.isInstalled()) isInstalled = true;
+
         if (isInstalled) {
             Log.d("Gotcha", "Some AdBlockers are installed!");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("AdBlocker found!")
+                    .setMessage("We detected some AdBlockers on your phone. Delete them or you can#t use this precious app!")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    });
+
+            // Create the AlertDialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
         } else {
             Log.d("Great", "No known AdBlockers are installed!");
         }
@@ -68,7 +84,7 @@ public class MainActivity extends ActionBarActivity {
 
     private boolean appInstalledOrNot(String uri) {
         PackageManager pm = getPackageManager();
-        boolean app_installed = false;
+        boolean app_installed;
         try {
             pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
             app_installed = true;

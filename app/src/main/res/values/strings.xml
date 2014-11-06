@@ -7,6 +7,9 @@
 
     <array name="adBlockerArray">
         <item>org.adblockplus.android</item>
+        <item>com.ultron.stop.ad.browser</item>
+        <item>com.appspot.swisscodemonkeys.detector</item>
+        <item>org.adaway</item>
     </array>
 
 </resources>
